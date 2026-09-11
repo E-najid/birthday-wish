@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">জন্মদিনের শুভকামনা</string>
     <string name="greeting">হ্যালো!</string>
-    <string name="wish">জন্মদিনের শুভকামনা</string>
-    <string name="subtitle">তোমার দিনটা সুন্দর হোক 🎂</string>
+    <string name="wish_main">🎉 শুভ জন্মদিন! 🎉</string>
+    <string name="wish_sub">তোমার জন্মদিনের শুভকামনা!</string>
+    <string name="wish_subtitle">তোমার দিনটা সুন্দর হোক 🎂✨</string>
+    <string name="tap_hint">ছুঁয়ে দাও → উদযাপন!</string>
 </resources>
