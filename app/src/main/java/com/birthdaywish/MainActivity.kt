@@ -29,8 +29,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -172,7 +172,7 @@ private fun DrawScope.drawBalloon(center: Offset, color: Color) {
         color = balloonColor,
         start = Offset(center.x, bottom - 2f),
         end = Offset(center.x, bottom + 10f),
-        strokeWidth = 2f,
-        cap = StrokeCap.Round
+        cap = StrokeCap.Round,
+        strokeWidth = 2f
     )
 }
