@@ -30,7 +30,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -71,7 +71,10 @@ fun BirthdayScreen() {
     var celebrating by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
         targetValue = if (celebrating) 1.2f else 1f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
         label = "celebrate_scale"
     )
 
@@ -81,16 +84,17 @@ fun BirthdayScreen() {
             .background(
                 Brush.verticalGradient(
                     colors = listOf(Color(0xFF1A1A2E), Color(0xFF16213E), Color(0xFF0F3460)),
-                    startY = 0f, endY = Float.POSITIVE_INFINITY
+                    startY = 0f,
+                    endY = Float.POSITIVE_INFINITY
                 )
             )
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val t = (System.currentTimeMillis() % 10000) / 10000f
-            balloons.forEach { b ->
-                val bx = (b.x + b.drift * size.width * 0.01f * t * 60f) % size.width
-                val by = (b.y - t * size.height * 0.02f) % (size.height + 200) - 100
-                drawBalloon(Offset(bx, by), b.color)
+            val time = (System.currentTimeMillis() % 10_000) / 10_000f
+            balloons.forEach { balloon ->
+                val x = (balloon.x + balloon.drift * size.width * 0.6f * time) % size.width
+                val y = (balloon.y - time * size.height * 0.2f) % (size.height + 200f) - 100f
+                drawBalloon(Offset(x, y), balloon.color)
             }
         }
 
@@ -100,7 +104,7 @@ fun BirthdayScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "🎉 Birthday! 🎉",
+                text = "🎉 শুভ জন্মদিন! 🎉",
                 fontSize = 34.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFFFE66D),
@@ -134,7 +138,7 @@ fun BirthdayScreen() {
                     .size(100.dp)
                     .scale(scale)
                     .background(
-                        Brush.radialGradient(
+                        brush = Brush.radialGradient(
                             colors = listOf(Color(0xFFFF6B6B), Color(0xFFFFE66D))
                         ),
                         shape = androidx.compose.foundation.shape.CircleShape
@@ -150,21 +154,22 @@ fun BirthdayScreen() {
 private fun DrawScope.drawBalloon(center: Offset, color: Color) {
     val width = 30f
     val height = 44f
-    val top = center.y - height / 2
-    val bottom = center.y + height / 2
-    val bodyColor = color.copy(alpha = 0.7f)
-    val knotColor = color.copy(alpha = 0.7f)
+    val top = center.y - height / 2f
+    val bottom = center.y + height / 2f
+    val balloonColor = color.copy(alpha = 0.7f)
 
     drawOval(
         rect = androidx.compose.ui.geometry.Rect.fromLTRB(
-            center.x - width / 2, top + 8f,
-            center.x + width / 2, bottom - 2f
+            center.x - width / 2f,
+            top + 8f,
+            center.x + width / 2f,
+            bottom - 2f
         ),
-        color = bodyColor
+        color = balloonColor
     )
 
     drawLine(
-        color = knotColor,
+        color = balloonColor,
         start = Offset(center.x, bottom - 2f),
         end = Offset(center.x, bottom + 10f),
         strokeWidth = 2f,
